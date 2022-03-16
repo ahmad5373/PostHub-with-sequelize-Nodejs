@@ -84,7 +84,7 @@ exports.createmail = async (req, res, next) => {
     console.error(error.message);
     res.json({
       status: false,
-      payload: "Something went wrong in Sendmail Route.",
+      payload: "Something went wrong in Sendmail please .",
     });
   }
 };
