@@ -93,8 +93,18 @@ exports.createmail = async (req, res, next) => {
 //Get all User
 exports.getuser = async (req, res, next) => {
   try {
-    const data = await user.findAll({});
+    const data = await user.findAll({
+      
+    });
+
+    const Even = data.map(user => user.user_id % 2===0);
+    const same = data.map(user => user.phone = 22334455);
+console.log('Even',Even);
+console.log('Even',same);
+
     res.send({ data });
+
+
   } catch (error) {
     console.log("error", error);
     return res.status(302).send({
