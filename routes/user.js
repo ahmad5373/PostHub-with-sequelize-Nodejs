@@ -12,6 +12,12 @@ Router.post("/createmail" ,user_controller.createmail);
 //get all User
 Router.get("/getuser" , user_controller.getuser);
 
+//Get all User with Even id Number using filter Function
+Router.get("/getuserevenid" , user_controller.getuserevenid);
+
+//Get all User with od id Having same Number using Map Function
+Router.get("/getuseroddid" , user_controller.getuseroddid);
+
 //get all User with profile
 Router.get("/getuserprofile" , user_controller.getuserprofile);
 

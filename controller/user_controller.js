@@ -9,6 +9,7 @@ const comment = require("../models/comment");
 const sendMail =require('../controller/gmail_controller');
 
 const sequelize = require("sequelize");
+const { json } = require("express/lib/response");
 const Op = sequelize.Op;
 
 //Create A New User with routes and save in database
@@ -96,15 +97,50 @@ exports.getuser = async (req, res, next) => {
     const data = await user.findAll({
       
     });
+res.send({ data });
+  } catch (error) {
+    console.log("error", error);
+    return res.status(302).send({
+      message: "could not get user",
+    });
+  }
+};
 
-    const Even = data.map(user => user.user_id % 2===0);
+//Get all User with Even id Number using Function
+exports.getuserevenid = async (req, res, next) => {
+  try {
+    const data = await user.findAll({
+      
+    });
+
+    
+    
+    const Even = data.filter(user => user.user_id % 2===0);
+    console.log('Even',Even);
+    return res.json(Even);
+
+   
+  } catch (error) {
+    console.log("error", error);
+    return res.status(302).send({
+      message: "could not get user",
+    });
+  }
+};
+//Get all User with od id Having same Number using Map Function
+exports.getuseroddid = async (req, res, next) => {
+  try {
+    const data = await user.findAll({
+      
+    });
+
+    
+  
     const same = data.map(user => user.phone = 22334455);
-console.log('Even',Even);
 console.log('Even',same);
 
-    res.send({ data });
 
-
+res.send({ data });
   } catch (error) {
     console.log("error", error);
     return res.status(302).send({
@@ -526,19 +562,27 @@ exports.getpostvotecomment = async (req, res, next) => {
 //Update User by id
 exports.update = async (req, res, next) => {
   try {
-    const user_id = req.params.id;
+    const user_id = req.params.id; 
+    const use = {
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone,
+      address:JSON.stringify(req.body.address), 
+    };
     const data = await user.update(req.body, {
       where: {
-        user_id: user_id,
+        id: user_id,
       },
     });
+    console.log('req.body',req.body)
     if (data !== null) {
       res.status(200).json({
         message: `user has been updated with id =${user_id}.`,
+        Data: data,
       });
     } else {
-      res.status(400).json({
-        message: `user connot be updated with id=${user_id}.`,
+      res.status(302).json({
+        message:  `Cannot update user with id=${user_id}. Maybe user was not found or req.body is empty!`,
       });
     }
   } catch (error) {
