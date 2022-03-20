@@ -7,7 +7,10 @@ const user_controller = require('../controller/user_controller');
 Router.post("/createuser" ,user_controller.createuser);
 
 //Send mail to User 
-Router.post("/createmail" ,user_controller.createmail);
+// Router.post("/createmail" ,user_controller.createmail);
+
+// Upload Single file
+Router.post("/upload", user_controller.upload);
 
 //get all User
 Router.get("/getuser" , user_controller.getuser);
