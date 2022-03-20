@@ -10,6 +10,7 @@ const sendMail =require('../controller/gmail_controller');
 
 const sequelize = require("sequelize");
 const { json } = require("express/lib/response");
+const { setMaxListeners } = require("events");
 const Op = sequelize.Op;
 
 //Create A New User with routes and save in database
@@ -134,13 +135,13 @@ exports.getuseroddid = async (req, res, next) => {
       
     });
 
-    
-  
-    const same = data.map(user => user.phone = 22334455);
-console.log('Even',same);
+    const same = data.map(user => user.user_id %2 !== 0);
+console.log('ODD',same);
+return res.json(same);
 
 
-res.send({ data });
+
+// res.send({ data });
   } catch (error) {
     console.log("error", error);
     return res.status(302).send({
@@ -563,13 +564,7 @@ exports.getpostvotecomment = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const user_id = req.params.id; 
-    const use = {
-      name: req.body.name,
-      email: req.body.email,
-      phone: req.body.phone,
-      address:JSON.stringify(req.body.address), 
-    };
-    const data = await user.update(req.body, {
+    const data = await user.update(req.body ,  {
       where: {
         id: user_id,
       },
