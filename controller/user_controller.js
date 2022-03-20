@@ -7,10 +7,10 @@ const post = require("../models/post");
 const vote = require("../models/vote");
 const comment = require("../models/comment");
 const sendMail =require('../controller/gmail_controller');
+const multer = require("multer");
+const upload = multer({dest:'upload/'});
 
 const sequelize = require("sequelize");
-const { json } = require("express/lib/response");
-const { setMaxListeners } = require("events");
 const Op = sequelize.Op;
 
 //Create A New User with routes and save in database
@@ -63,33 +63,32 @@ exports.createuser = async (req, res, next) => {
   }
 };
 
-//create A email to send user
-exports.createmail = async (req, res, next) => {
-
-  try {
-    
-  const mailOptions = {
-    from: process.env.EMAIL,
-    to: req.body.to,
-    subject: req.body.subject,
-    text: req.body.text,
-  };
-
-  const result = await sendMail(mailOptions);
-  // send the response
-  res.json({
-    status: true,
-    payload: result,
+//Upload single file
+exports.upload =  (upload.single('profile'), (req, res)=>{
+  try{
+  
+    const fileStorageEngine = multer.diskStorage({
+      destination: (req,file,cd)=> {
+      cd(null, './uploads')   
+      },
+      filename: (req,file,cb)=>{
+      cb(null, Date.now() + '--' + file.originalname);
+      },
   });
+ 
+  console.log("fileStorageEngine",fileStorageEngine);
+  console.log("req.file",req.file);
+  res.send('Single File Upload Success!');
 
   } catch (error) {
     console.error(error.message);
-    res.json({
+    res.send({
       status: false,
       payload: "Something went wrong in while Sendingmail.",
     });
   }
-};
+});
+
 
 
 //Get all User

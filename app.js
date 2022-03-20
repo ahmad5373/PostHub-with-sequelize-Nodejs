@@ -9,11 +9,18 @@ const post = require('./routes/post');
 const vote =require('./routes/vote');
 const comment = require('./routes/comment');
 const comment_vote = require('./routes/comment_vote');
+var bodyParser = require('body-parser');
+
 const PORT = process.env.PORT ||1500;
 
 app.get("/" , (req,res) =>{
     res.send('This is testing app')
 });
+
+
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
 
 
 // app.use(express.json()) use as a middleware
