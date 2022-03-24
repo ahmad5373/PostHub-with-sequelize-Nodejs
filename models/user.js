@@ -10,7 +10,7 @@
              autoIncrement: true,
          },
 
-         name:{
+         Name:{
              type: sequelize.STRING(255),
          },
 
