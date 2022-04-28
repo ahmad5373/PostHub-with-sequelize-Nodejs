@@ -68,8 +68,8 @@ exports.upload =  (upload.single('profile'), (req, res)=>{
   try{
   
     const fileStorageEngine = multer.diskStorage({
-      destination: (req,file,cd)=> {
-      cd(null, './uploads')   
+      destination: (req,file,cb)=> {
+      cb(null, './uploads')   
       },
       filename: (req,file,cb)=>{
       cb(null, Date.now() + '--' + file.originalname);
