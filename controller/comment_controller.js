@@ -19,23 +19,6 @@ exports.createcomment = async (req, res, next) => {
         user_id: req.body.user_id,
       };
 
-    
-    //    //Check if email/phone no is already exist then throw error
-    // const checkuserid = req.body.user_id;
-    // const checkpostid = req.body.post_id;
-    // const found = await vote.findOne({
-    //   where: {
-    //     [Op.and]: [{ user_id: checkuserid }, { post_id: checkpostid }],
-    //   },
-    // });
-    // console.log("check", checkuserid, checkpostid);
-
-    // // if found show error  vote on this post  exist already
-    // if (found) {
-    //   res.send("your  vote on this post   is already exist ");
-    //   console.log("found", found);
-    // } else {
-
       // Save comment in database
       const dt = await comment.create(commen);
       return res.send({ data: dt });
