@@ -26,7 +26,7 @@ exports.createuser = async (req, res, next) => {
     }
     //Create new User
     const use = {
-      name: req.body.name,
+      Name: req.body.name,
       email: req.body.email,
       phone: req.body.phone,
       address:JSON.stringify(req.body.address), 
@@ -565,7 +565,7 @@ exports.update = async (req, res, next) => {
     const user_id = req.params.id; 
     const data = await user.update(req.body ,  {
       where: {
-        id: user_id,
+        user_id: user_id,
       },
     });
     console.log('req.body',req.body)
